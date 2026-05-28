@@ -1,38 +1,61 @@
-// =========================
-// ARQUIVO: script.js
-// =========================
+// DARK MODE
 
-// ANIMAÇÃO DOS NÚMEROS
+const darkModeBtn = document.getElementById("darkModeBtn");
 
-const counters = document.querySelectorAll('.number');
+darkModeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
 
-counters.forEach(counter => {
+  if(document.body.classList.contains("dark-mode")){
+    darkModeBtn.textContent = "☀️";
+  } else{
+    darkModeBtn.textContent = "🌙";
+  }
+});
 
-  const updateCounter = () => {
 
-    const target = +counter.getAttribute('data-target');
-    const current = +counter.innerText;
+// MENSAGEM INTERATIVA
 
-    const increment = target / 100;
+const showMessageBtn = document.getElementById("showMessageBtn");
+const messageBox = document.getElementById("messageBox");
 
-    if(current < target){
-      counter.innerText = `${Math.ceil(current + increment)}`;
-      setTimeout(updateCounter, 30);
-    } else{
-      counter.innerText = target + "%";
+showMessageBtn.addEventListener("click", () => {
+
+  const messages = [
+    "🌱 Reduzir desperdícios ajuda o planeta!",
+    "🚜 Tecnologia e sustentabilidade caminham juntas!",
+    "🍎 Cada alimento salvo faz diferença!",
+    "🌎 Agricultura inteligente é o futuro!",
+    "💚 Produzir mais desperdiçando menos é essencial!"
+  ];
+
+  const randomMessage =
+    messages[Math.floor(Math.random() * messages.length)];
+
+  messageBox.textContent = randomMessage;
+});
+
+
+// ANIMAÇÃO AO ROLAR A PÁGINA
+
+const cards = document.querySelectorAll(".card");
+
+window.addEventListener("scroll", () => {
+
+  cards.forEach(card => {
+
+    const cardTop = card.getBoundingClientRect().top;
+
+    if(cardTop < window.innerHeight - 100){
+      card.style.opacity = "1";
+      card.style.transform = "translateY(0)";
     }
 
-  };
-
-  updateCounter();
+  });
 
 });
 
-// MENU MOBILE
-
-const menuBtn = document.querySelector('.menu-mobile');
-const navLinks = document.querySelector('.nav-links');
-
-menuBtn.addEventListener('click', () => {
-  navLinks.classList.toggle('active');
+cards.forEach(card => {
+  card.style.opacity = "0";
+  card.style.transform = "translateY(50px)";
+  card.style.transition = "0.6s";
 });
